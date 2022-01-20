@@ -16,7 +16,7 @@ type studentsService struct {
 type studentsServiceInterface interface {
 	GetStudents() ([]students.Student, *errors.RestErr)
 	CreateStudent(students.Student) (*students.Student, *errors.RestErr)
-	GetStudent() (*students.Student, *errors.RestErr)
+	GetStudent(string) (*students.Student, *errors.RestErr)
 	UpdateStudent(students.Student) (*students.Student, *errors.RestErr)
 }
 
@@ -44,8 +44,8 @@ func (*studentsService) CreateStudent(student students.Student) (*students.Stude
 
 }
 
-func (*studentsService) GetStudent() (*students.Student, *errors.RestErr) {
-	result := &students.Student{}
+func (*studentsService) GetStudent(studentId string) (*students.Student, *errors.RestErr) {
+	result := &students.Student{StudentId: studentId}
 	if err := result.Get(); err != nil {
 		return nil, err
 	}

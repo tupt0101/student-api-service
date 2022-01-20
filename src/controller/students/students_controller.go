@@ -44,9 +44,41 @@ func Create(c *gin.Context) {
 }
 
 func GetById(c *gin.Context) {
+	studentId := c.Param("student_id")
+	if studentId == "" {
+		c.JSON(http.StatusBadRequest, "id is not valid")
+		return
+	}
 
+	student, getErr := students.StudentsService.GetStudent(studentId)
+	if getErr != nil {
+		c.JSON(getErr.Status, getErr)
+		return
+	}
+
+	c.JSON(http.StatusCreated, student.Marshal(true))
 }
 
 func Update(c *gin.Context) {
+	studentId := c.Param("student_id")
+	if studentId == "" {
+		c.JSON(http.StatusBadRequest, "id is not valid")
+		return
+	}
 
+	var student dto.Student
+	if err := c.ShouldBindJSON(&student); err != nil {
+		restErr := errors.NewBadRequestError("invalid json body")
+		c.JSON(restErr.Status, restErr)
+		return
+	}
+
+	student.StudentId = studentId
+	result, err := students.StudentsService.UpdateStudent(student)
+	if err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
+	c.JSON(http.StatusCreated, result.Marshal(true))
 }
