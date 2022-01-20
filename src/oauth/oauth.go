@@ -39,7 +39,7 @@ func AuthenticateRequest(request *http.Request) *errors.RestErr {
 
 	accessTokenId := request.URL.Query().Get(paramAccessToken)
 	if accessTokenId == "" {
-		return nil
+		return errors.NewInternalServerError("un-authenticated request")
 	}
 
 	at, err := getAccessToken(accessTokenId)
@@ -47,7 +47,6 @@ func AuthenticateRequest(request *http.Request) *errors.RestErr {
 		return err
 	}
 
-	// request.Header.Add(headerXClientId, fmt.Sprintf("%v", at.ClientId))
 	request.Header.Add(headerXCallerId, fmt.Sprintf("%v", at.UserId))
 
 	return nil
@@ -57,11 +56,11 @@ func cleanRequest(request *http.Request) {
 	if request == nil {
 		return
 	}
-	// request.Header.Del(headerXClientId)
-	// request.Header.Del(headerXCallerId)
+	request.Header.Del(headerXCallerId)
 }
 
 func getAccessToken(accessTokenId string) (*accessToken, *errors.RestErr) {
+	fmt.Println("in")
 	response := oauthRestClient.Get(fmt.Sprintf("/oauth/access_token/%s", accessTokenId))
 	if response == nil || response.Response == nil {
 		return nil, errors.NewInternalServerError("invalid restclient response when trying to get access token")

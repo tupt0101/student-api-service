@@ -27,6 +27,11 @@ func Get(c *gin.Context) {
 }
 
 func Create(c *gin.Context) {
+	if err := oauth.AuthenticateRequest(c.Request); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
 	var student dto.Student
 	if err := c.ShouldBindJSON(&student); err != nil {
 		restErr := errors.NewBadRequestError("invalid json body")
@@ -44,6 +49,11 @@ func Create(c *gin.Context) {
 }
 
 func GetById(c *gin.Context) {
+	if err := oauth.AuthenticateRequest(c.Request); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
 	studentId := c.Param("student_id")
 	if studentId == "" {
 		c.JSON(http.StatusBadRequest, "id is not valid")
@@ -56,10 +66,15 @@ func GetById(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, student.Marshal(true))
+	c.JSON(http.StatusOK, student.Marshal(true))
 }
 
 func Update(c *gin.Context) {
+	if err := oauth.AuthenticateRequest(c.Request); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
 	studentId := c.Param("student_id")
 	if studentId == "" {
 		c.JSON(http.StatusBadRequest, "id is not valid")
@@ -80,5 +95,5 @@ func Update(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, result.Marshal(true))
+	c.JSON(http.StatusNoContent, result.Marshal(true))
 }
