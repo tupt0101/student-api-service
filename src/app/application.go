@@ -10,5 +10,7 @@ var (
 
 func StartApplication() {
 
+	mapUrls()
+
 	router.Run(":9091")
 }
