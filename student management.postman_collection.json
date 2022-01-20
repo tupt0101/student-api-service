@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "798e3dc2-b5b9-4862-b0bb-6d6351406464",
+		"name": "student management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get access token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9092/oauth/access_token/66b0a79724aa22faf6930f9cd862000e",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"oauth",
+						"access_token",
+						"66b0a79724aa22faf6930f9cd862000e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create access token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"grant_type\": \"password\",\n    \"username\": \"tupt@gmail.com\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9092/oauth/access_token/",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"oauth",
+						"access_token",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9091/api/students?access_token=66b0a79724aa22faf6930f9cd862000e",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"api",
+						"students"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "66b0a79724aa22faf6930f9cd862000e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"student_id\": \"S000004\",\n    \"name\": \"Kudo Shinichi\",\n    \"class\": \"Football\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9091/api/students?access_token=66b0a79724aa22faf6930f9cd862000e",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"api",
+						"students"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "66b0a79724aa22faf6930f9cd862000e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get student by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9091/api/students/S000001?access_token=66b0a79724aa22faf6930f9cd862000e",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"api",
+						"students",
+						"S000001"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "66b0a79724aa22faf6930f9cd862000e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Tu Phan Thanh\",\n    \"class\": \"machine learning\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9091/api/students/S000003?access_token=66b0a79724aa22faf6930f9cd862000e",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"api",
+						"students",
+						"S000003"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "66b0a79724aa22faf6930f9cd862000e"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
